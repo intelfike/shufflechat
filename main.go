@@ -14,7 +14,6 @@ import (
 
 var port = flag.String("http", ":8888", "HTTP port number.")
 var cmt = comet.NewComet("realtimesession")
-var chatChanList = make([]chan string, 0)
 
 func init() {
 	flag.Parse()
@@ -50,8 +49,7 @@ func init() {
 		}
 	})
 	http.HandleFunc("/exit", func(w http.ResponseWriter, r *http.Request) {
-		name, _ := input.ReadCookie(r, "name")
-		cmt.Done(r, name+"が退室しました")
+		cmt.End(r)
 	})
 }
 func main() {
