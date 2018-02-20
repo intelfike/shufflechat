@@ -52,13 +52,14 @@ article{
 
 <script>
 document.body.onload = () => {
-	var name = document.cookie.match('(?<=name=)[^;]*')
+	var name = document.cookie.match(/name=[^\s;]*/)
 	name = decodeURIComponent(name)
+	name = name.substr(5)
 	user_name.value = name
 	comet()
 }
 document.body.onbeforeunload = async () => {
-	await Ajax('POST', '/logout' , null)
+	await Ajax('POST', '/exit' , null)
 }
 submit.onclick = async () => {
 	var data = {
@@ -79,11 +80,13 @@ text.onkeydown = async (e) => {
 }
 async function comet(){
 	while(true){
+		console.log("comet")
 		let html = await Ajax("GET", "/comet", null)
 		chat_history.innerHTML += html
-		console.log("e")
+		await Sleep(1000)
 	}
 }
+
 function Ajax(method, action, data){
 	return new Promise(ok => {
 		var aj = new XMLHttpRequest()
@@ -92,6 +95,11 @@ function Ajax(method, action, data){
 			 ok(aj.responseText)
 		}
 		aj.send(data)
+	})
+}
+function Sleep(time) {
+	return new Promise(ok => {
+		setTimeout(ok, time)
 	})
 }
 
