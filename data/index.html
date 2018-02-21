@@ -5,14 +5,14 @@
 <h1>シャッフルチャット</h1>
 ギリギリ理解できる程度にランダムにシャッフルされるチャットを楽しむことができます。
 <article>
+	<div id="chat_history">
+		
+	</div>
 	<div id="form">
 		ユーザー名:<input type="text" id="user_name">
 		<textarea id="text" placeholder="Ctrl+Enterで送信"></textarea>
 		<br>
 		<button id="submit">送信</button>
-	</div>
-	<div id="chat_history">
-		
 	</div>
 </article>
 
@@ -80,10 +80,10 @@ text.onkeydown = async (e) => {
 }
 async function comet(){
 	while(true){
-		console.log("comet")
 		let html = await Ajax("GET", "/comet", null)
 		chat_history.innerHTML += html
-		await Sleep(1000)
+		window.scrollTo(null, document.body.scrollHeight)
+		// await Sleep(1000)
 	}
 }
 

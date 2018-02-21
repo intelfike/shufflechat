@@ -36,7 +36,6 @@ func init() {
 		cmt.DoneAll(htmlgen.ChatItem(name, text))
 	})
 	http.HandleFunc("/comet", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("hello")
 		i, err := cmt.Wait(r)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
